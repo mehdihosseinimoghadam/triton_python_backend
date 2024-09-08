@@ -1,4 +1,4 @@
-name: "pytorch"
+name: "reverse_string"
 backend: "python"
 
 input [
