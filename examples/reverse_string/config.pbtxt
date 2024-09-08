@@ -1,0 +1,19 @@
+name: "pytorch"
+backend: "python"
+
+input [
+  {
+    name: "INPUT"
+    data_type: TYPE_STRING
+    dims: [ 1 ]
+  }
+]
+output [
+  {
+    name: "OUTPUT"
+    data_type: TYPE_STRING
+    dims: [ 1 ]
+  }
+]
+
+instance_group [{ kind: KIND_CPU }]
