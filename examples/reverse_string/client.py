@@ -3,7 +3,7 @@ import numpy as np
 import tritonclient.http as httpclient
 from tritonclient.utils import *
 
-model_name = "pytorch"
+model_name = "reverse_string"
 
 with httpclient.InferenceServerClient("localhost:8000") as client:
     input_string = "Hello, Triton!"
