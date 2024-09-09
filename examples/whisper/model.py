@@ -14,7 +14,7 @@ class AudioTranscriptionModel:
     def transcribe_audio(self, audio_data):
         # Load audio from byte data
         with io.BytesIO(audio_data) as audio_file:
-            audio, sample_rate = sf.read(audio_file)
+            audio, sample_rate = sf.read(audio_file, dtype="float32")
 
         # Convert to mono if stereo
         if len(audio.shape) > 1:
@@ -23,6 +23,9 @@ class AudioTranscriptionModel:
         # Resample to 16kHz if necessary
         if sample_rate != 16000:
             audio = librosa.resample(audio, orig_sr=sample_rate, target_sr=16000)
+
+        # Ensure audio is float32
+        audio = audio.astype(np.float32)
 
         # Transcribe the audio
         result = self.model.transcribe(audio)
