@@ -3,6 +3,7 @@ import numpy as np
 import triton_python_backend_utils as pb_utils
 import whisper
 import io
+import soundfile as sf
 
 
 class AudioTranscriptionModel:
@@ -12,8 +13,18 @@ class AudioTranscriptionModel:
     def transcribe_audio(self, audio_data):
         # Load audio from byte data
         with io.BytesIO(audio_data) as audio_file:
-            # Transcribe the audio
-            result = self.model.transcribe(audio_file)
+            audio, sample_rate = sf.read(audio_file)
+
+        # Convert to mono if stereo
+        if len(audio.shape) > 1:
+            audio = audio.mean(axis=1)
+
+        # Resample to 16kHz if necessary
+        if sample_rate != 16000:
+            audio = librosa.resample(audio, sample_rate, 16000)
+
+        # Transcribe the audio
+        result = self.model.transcribe(audio)
         return result["text"]
 
 
