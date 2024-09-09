@@ -1,0 +1,19 @@
+name: "whisper"
+backend: "python"
+
+input [
+  {
+    name: "AUDIO_INPUT"
+    data_type: TYPE_STRING
+    dims: [ 1 ]
+  }
+]
+output [
+  {
+    name: "TRANSCRIPTION_OUTPUT"
+    data_type: TYPE_STRING
+    dims: [ 1 ]
+  }
+]
+
+instance_group [{ kind: KIND_CPU }]
