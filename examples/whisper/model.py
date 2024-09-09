@@ -4,6 +4,7 @@ import triton_python_backend_utils as pb_utils
 import whisper
 import io
 import soundfile as sf
+import librosa
 
 
 class AudioTranscriptionModel:
@@ -21,7 +22,7 @@ class AudioTranscriptionModel:
 
         # Resample to 16kHz if necessary
         if sample_rate != 16000:
-            audio = librosa.resample(audio, sample_rate, 16000)
+            audio = librosa.resample(audio, orig_sr=sample_rate, target_sr=16000)
 
         # Transcribe the audio
         result = self.model.transcribe(audio)
